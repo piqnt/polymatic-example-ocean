@@ -1,0 +1,34 @@
+{
+  "name": "polymatic-example-ocean",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "pretty": "prettier --write './src/**/*.ts'",
+    "svg-pretty": "svgo ./media/*.svg --pretty",
+    "svg-export": "svgexport ./media/main.svg ./media/main.png 8x"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "prettier": "^3.5.3",
+    "svgexport": "^0.4.2",
+    "svgo": "^3.3.2",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.3",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "dependencies": {
+    "nanoid": "^5.1.5",
+    "polymatic": "^0.0.8",
+    "stage-js": "^1.0.0-alpha.17",
+    "store": "^2.0.12"
+  }
+}

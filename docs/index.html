@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Ocean</title>
+  <meta name="viewport"
+    content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <meta name="theme-color" content="#222" />
+  <meta name="color-scheme" content="dark" />
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.4;
+    }
+
+    dialog {
+      border-radius: 10px;
+      border: 0 none;
+      padding: 24px;
+      position: relative;
+      max-width: 500px;
+    }
+
+    dialog::backdrop {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    dialog [aria-label="close"] {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #fff;
+    }
+  </style>
+  <script type="module" crossorigin src="/polymatic-example-ocean/assets/index-DUd3Siee.js"></script>
+</head>
+
+<body>
+  <dialog id="help-content">
+    <h3>How to play</h3>
+    <ul>
+      <li>Collect bubbles (small circles) to fill up your oxygen</li>
+      <li>Avoid other live species, else die</li>
+      <li>Collect power-ups (large circles) to be able to eat other species</li>
+      <li>Collect coins and other valuable items to buy upgrades</li>
+    </ul>
+    <h3>Upgrades</h3>
+    <ul>
+      <li>Pull bubbles</li>
+      <li>Move around faster</li>
+      <li>Push enemies</li>
+      <li>Longer oxygen usage</li>
+      <li>Longer power-up</li>
+      <li>Reduce game speed</li>
+    </ul>
+    <h3>Collectible items</h3>
+    <ul>
+      <li>Coins: 1-100 coins</li>
+      <li>Small diamond: 1k coins, distance 5k+</li>
+      <li>Large diamond: 10k coins, distance 7k+</li>
+      <li>Key: 100k coins, distance 10k+</li>
+      <li>Crown: 1M coins, distance 15k+</li>
+    </ul>
+    <br>
+    <p>Ocean is an open-source game made with Polymatic framework. Check out the <a href="https://github.com/piqnt/polymatic-example-ocean" target="_blank">project github repository</a> for more information.</p>
+  </dialog>
+</body>
+
+</html>
