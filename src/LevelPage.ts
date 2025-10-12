@@ -7,7 +7,7 @@
 
 import * as Stage from "stage-js";
 
-import { Middleware, Dataset, Driver, Memo } from "polymatic";
+import { Middleware, Binder, Driver, Memo } from "polymatic";
 
 import { type Player } from "./Player";
 import { type Bubble } from "./Bubble";
@@ -236,7 +236,7 @@ export class LevelPage extends Middleware<MainContext> {
     this.dist.value(Format.k(level.dist));
     this.viewbox.pin("offsetY", level.dist);
     this.cursor.offset(level.cursor);
-    this.entities.data([level.player, ...level.objects]);
+    this.binder.data([level.player, ...level.objects]);
   };
 
   playerDriver = Driver.create<Player, { ui: Stage.Anim; memo: Memo }>({
@@ -366,14 +366,10 @@ export class LevelPage extends Middleware<MainContext> {
     },
   });
 
-  entities = Dataset.create<Bubble | Power | Coin | Enemy | Player>({
+  binder = Binder.create<Bubble | Power | Coin | Enemy | Player>({
     key: (d) => d.key,
-  })
-    .addDriver(this.playerDriver)
-    .addDriver(this.enemyDriver)
-    .addDriver(this.powerDriver)
-    .addDriver(this.coinDriver)
-    .addDriver(this.bubbleDriver);
+    drivers: [this.playerDriver, this.enemyDriver, this.powerDriver, this.coinDriver, this.bubbleDriver],
+  });
 }
 
 export const randomBackgroundColor = randomize([
