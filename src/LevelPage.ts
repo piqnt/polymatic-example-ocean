@@ -56,7 +56,7 @@ export class LevelPage extends Middleware<MainContext> {
 
     this.on("activate", this.handleActivate);
     this.on("deactivate", this.handleDeactivate);
-
+    this.on("frame-render", this.handleFrameRender);
     this.on("level-end", this.handleLevelEnd);
   }
 
@@ -103,8 +103,6 @@ export class LevelPage extends Middleware<MainContext> {
     this.page.pin({ align: 0.5 });
 
     this.page.on("viewport", this.handleViewport);
-
-    this.page.tick(this.handleTick, true);
 
     this.bg = Stage.sprite("playbg");
     this.bg.appendTo(this.page);
@@ -227,8 +225,7 @@ export class LevelPage extends Middleware<MainContext> {
     // this.cursor.offset(point).visible(visible);
   };
 
-  handleTick = (dt: number) => {
-    this.emit("terminal-tick", dt);
+  handleFrameRender = () => {
     const level = this.context.level;
     this.coins.value(Format.coin(level.coins));
     this.oxygen.setValue(level.oxygen * 25, level.oxygen < 0.35);

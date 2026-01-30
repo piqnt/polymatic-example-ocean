@@ -20,6 +20,7 @@ import { RandomPattern } from "./RandomPattern";
 import { RandomCoin } from "./RandomCoin";
 import { RandomEnemy } from "./RandomEnemy";
 import { Gamepad } from "./Gamepad";
+import { type FrameLoopEvent } from "./FrameLoop";
 
 type Entity = Enemy | Power | Coin | Bubble;
 
@@ -29,7 +30,7 @@ export class Level extends Middleware<MainContext> {
     this.on("activate", this.handleActivate);
     this.on("deactivate", this.handleDeactivate);
 
-    this.on("terminal-tick", this.handleTick);
+    this.on("frame-update", this.handleFrameUpdate);
 
     this.on("insert-bubble", this.handleInsert);
     this.on("insert-enemy", this.handleInsert);
@@ -131,11 +132,11 @@ export class Level extends Middleware<MainContext> {
     this.deleted.add(entity);
   };
 
-  handleTick = (dtms: number) => {
+  handleFrameUpdate = (ev: FrameLoopEvent) => {
     // limit max delta time to 100ms
-    dtms = Math.min(dtms, 100);
+    const dt = Math.min(ev.dt, 100);
     // convert ms to seconds
-    const dts = dtms / 1000;
+    const dts = dt / 1000;
 
     const level = this.context.level;
     const player = level.player;
@@ -223,7 +224,7 @@ export class Level extends Middleware<MainContext> {
       if (dxy < 0.1) {
         level.cursor.fresh = false;
       }
-      dxy = Math.max(1, dxy / level.cursor.speed / dtms);
+      dxy = Math.max(1, dxy / level.cursor.speed / dt);
       px += dx / dxy;
       py += dy / dxy;
     }

@@ -27,8 +27,8 @@
   },
   "dependencies": {
     "nanoid": "^5.1.5",
-    "polymatic": "^0.0.8",
-    "stage-js": "^1.0.0-alpha.17",
+    "polymatic": "^0.0.12",
+    "stage-js": "^1.0.0-alpha.18",
     "store": "^2.0.12"
   }
 }

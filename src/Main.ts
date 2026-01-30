@@ -13,10 +13,12 @@ import { StageLoader } from "./StageLoader";
 import { Upgrade } from "./Upgrade";
 import { LocalStore } from "./LocalStore";
 import { ConfigLoader } from "./Config";
+import { FrameLoop } from "./FrameLoop";
 
 export class Main extends Middleware<MainContext> {
   constructor() {
     super();
+    this.use(new FrameLoop())
     this.use(new ConfigLoader());
     this.use(new StageLoader());
     this.use(new LocalStore());
