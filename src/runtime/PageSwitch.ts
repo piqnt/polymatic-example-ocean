@@ -7,28 +7,28 @@
 
 import { Middleware } from "polymatic";
 
-export interface PageConfig {
-  name: string;
-  bookmark?: number;
-}
+import { type MainContext, type PageConfig } from "../model";
 
 export type PageMap = Record<string, Middleware<any>>;
 
-export interface PageSwitchContext {
-  page: PageConfig;
-}
-
-export class PageSwitch extends Middleware<PageSwitchContext> {
+/**
+ * Swaps in the middleware that runs the named page, and publishes the choice on
+ * `context.page` so the shell knows what to draw.
+ *
+ * The menu is a Preact page now (shell/HomePage), so "home-page" maps to a
+ * middleware that only paints the backdrop on the stage behind it.
+ */
+export class PageSwitch extends Middleware<MainContext> {
   pages: PageMap;
   page: Middleware;
 
   constructor(pages: PageMap) {
     super();
     this.pages = pages;
-    this.on("page-set", this.handleSetScreen);
+    this.on("page-set", this.handleSetPage);
   }
 
-  handleSetScreen = (config: PageConfig) => {
+  handleSetPage = (config: PageConfig) => {
     if (this.page) {
       this.unuse(this.page);
     }
@@ -36,9 +36,7 @@ export class PageSwitch extends Middleware<PageSwitchContext> {
     this.page = this.pages[config.name];
 
     if (this.page) {
-      this.setContext((context) => {
-        context.page = config;
-      });
+      this.context.page.value = config;
       this.use(this.page);
     } else {
       console.log("Unknown page", config.name);

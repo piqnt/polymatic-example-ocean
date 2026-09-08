@@ -7,7 +7,7 @@
 
 import { Middleware } from "polymatic";
 
-import { type MainContext } from "./Context";
+import { type MainContext } from "../model";
 
 // this is not implemented yet
 export class EndPage extends Middleware<MainContext> {

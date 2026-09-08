@@ -5,10 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Middleware } from "polymatic";
-
-import { type MainContext } from "./Context";
-
 export const Config = {
   /** play field width */
   width: 120,
@@ -30,14 +26,3 @@ export const Config = {
 
   notch: 0,
 };
-
-export class ConfigLoader extends Middleware<MainContext> {
-  constructor() {
-    super();
-    this.on("activate", this.handleActivate);
-  }
-
-  handleActivate = () => {
-    this.context.config = Config;
-  };
-}

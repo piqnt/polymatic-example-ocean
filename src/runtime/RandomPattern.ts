@@ -7,11 +7,11 @@
 
 import { Middleware } from "polymatic";
 
-import { Pattern, type PatternCallback, type PatternConfig } from "./Pattern";
-import { type MainContext } from "./Context";
-import { Bubble } from "./Bubble";
-import { Calc } from "./Calc";
-import { type Enemy } from "./Enemy";
+import { Pattern, type PatternCallback, type PatternConfig } from "../model";
+import { type MainContext } from "../model";
+import { Bubble } from "../model";
+import { Calc } from "../model";
+import { type Enemy } from "../model";
 
 export class RandomPattern extends Middleware<MainContext> {
   next: number;

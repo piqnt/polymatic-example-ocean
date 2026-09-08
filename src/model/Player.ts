@@ -7,7 +7,7 @@
 
 import { nanoid } from "nanoid";
 
-import { type Upgrades } from "./Context";
+import { type Upgrades } from "./Upgrades";
 
 export class Player {
   key = "player-" + nanoid(6);

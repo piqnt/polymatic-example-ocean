@@ -9,14 +9,8 @@ import * as Stage from "stage-js";
 
 import { Middleware, Binder, Driver, Memo } from "polymatic";
 
-import { type Player } from "./Player";
-import { type Bubble } from "./Bubble";
-import { type Power } from "./Power";
-import { type Coin } from "./Coin";
-import { type Enemy } from "./Enemy";
+import { type Player, type Bubble, type Power, type Coin, type Enemy, type MainContext } from "../model";
 import { Level } from "./Level";
-import { Format } from "./Format";
-import { type MainContext } from "./Context";
 
 const COIN_SCALE = {
   "1": 0.7 * 1,
@@ -28,7 +22,13 @@ const COIN_SCALE = {
   "100": 1.1 * 1,
 };
 
-export class LevelPage extends Middleware<MainContext> {
+/**
+ * The run as it is drawn on the stage: the field, the cursor, and every
+ * creature, bubble, coin and power-up in it. The readouts that used to sit
+ * around it - oxygen, power, distance, coins, the coin popup - are the Preact
+ * hud now (shell/PlayHud), fed by runtime/HudManager.
+ */
+export class LevelView extends Middleware<MainContext> {
   page: Stage.Node;
 
   viewbox: Stage.Node;
@@ -36,13 +36,6 @@ export class LevelPage extends Middleware<MainContext> {
   bubbles: Stage.Node;
   items: Stage.Node;
   player: Stage.Node;
-
-  oxygen: Bar;
-  powerup: Bar;
-  dist: Stage.Monotype;
-  coins: Stage.Monotype;
-
-  lastCoin: LastCoin;
 
   bg: Stage.Sprite;
   border: Stage.Sprite;
@@ -134,53 +127,6 @@ export class LevelPage extends Middleware<MainContext> {
       scaleY: -1,
     });
 
-    this.oxygen = new Bar("oxygen");
-    this.oxygen.appendTo(this.page);
-    this.oxygen.pin({
-      alignX: 1,
-      alignY: 0,
-      offsetX: -3,
-      offsetY: 2,
-    });
-
-    this.powerup = new Bar("powerup");
-    this.powerup.appendTo(this.page);
-    this.powerup.pin({
-      alignX: 1,
-      alignY: 0,
-      offsetX: -3,
-      offsetY: 8,
-    });
-
-    this.dist = Stage.monotype("d");
-    this.dist.appendTo(this.page);
-    this.dist.pin({
-      alignX: 0,
-      alignY: 0,
-      offsetX: 3,
-      offsetY: 11,
-      handleX: 0,
-    });
-
-    this.coins = Stage.monotype("d");
-    this.coins.appendTo(this.page);
-    this.coins.pin({
-      alignX: 0,
-      alignY: 0,
-      offsetX: 3,
-      offsetY: 3,
-    });
-
-    this.lastCoin = new LastCoin();
-    this.lastCoin.appendTo(this.page);
-    this.lastCoin.pin({
-      alignX: 0.5,
-      alignY: 0,
-      offsetX: 10,
-      offsetY: 2,
-    });
-    this.lastCoin.hide();
-
     this.cursor = Stage.sprite("cursor");
     this.cursor.pin("handle", 0.5);
     this.cursor.appendTo(this.viewbox);
@@ -227,10 +173,6 @@ export class LevelPage extends Middleware<MainContext> {
 
   handleFrameRender = () => {
     const level = this.context.level;
-    this.coins.value(Format.coin(level.coins));
-    this.oxygen.setValue(level.oxygen * 25, level.oxygen < 0.35);
-    this.powerup.setValue(level.power / 30);
-    this.dist.value(Format.k(level.dist));
     this.viewbox.pin("offsetY", level.dist);
     this.cursor.offset(level.cursor);
     this.binder.data([level.player, ...level.objects]);
@@ -328,7 +270,6 @@ export class LevelPage extends Middleware<MainContext> {
     },
     exit: (coin, ui) => {
       if (coin.collected) {
-        this.lastCoin.setCoin(coin.value, 1000);
         const x = ui.pin("offsetX");
         const y = ui.pin("offsetY");
         const speed = this.context.level.speed;
@@ -401,53 +342,5 @@ function randomize<T>(list: T[]) {
   let i = 0;
   return () => {
     return list[i++ % list.length];
-  };
-}
-
-class Bar extends Stage.Sprite {
-  warn = false;
-  constructor(sprite: string) {
-    super();
-    this.texture(sprite);
-    this.stretch();
-    this.tick((dt, t) => {
-      this.alpha(this.warn ? Math.sin(t / 100) * 0.5 + 0.5 : 1);
-    });
-  }
-
-  setValue(value: number, warn: boolean = false) {
-    this.warn = warn;
-    this.pin("width", Math.max(0, value) + 5);
-    this.visible(value > 0);
-  }
-}
-
-class LastCoin extends Stage.Component {
-  coinImage: Stage.Sprite;
-  coinValue: Stage.Monotype;
-  timeout: any;
-
-  constructor() {
-    super();
-    this.column(0.5);
-
-    this.coinImage = Stage.sprite();
-    this.coinImage.appendTo(this);
-
-    this.coinValue = Stage.monotype("d");
-    this.coinValue.pin("scale", 0.8);
-    this.coinValue.appendTo(this);
-
-    this.hide();
-  }
-
-  setCoin = (value: number, time: number) => {
-    const scale = COIN_SCALE[value];
-    this.coinImage.texture("coin_" + value).pin("scale", scale || 1);
-    this.coinValue.value(Format.coin(value)).visible(value > 100);
-
-    this.show();
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => this.hide(), time);
   };
 }

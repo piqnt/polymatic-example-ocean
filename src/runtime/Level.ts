@@ -7,14 +7,14 @@
 
 import { Middleware } from "polymatic";
 
-import { Calc } from "./Calc";
+import { Calc } from "../model";
 
-import { LevelData, type MainContext } from "./Context";
-import { Coin } from "./Coin";
-import { Enemy } from "./Enemy";
-import { Power } from "./Power";
-import { Bubble } from "./Bubble";
-import { Player } from "./Player";
+import { LevelData, type MainContext } from "../model";
+import { Coin } from "../model";
+import { Enemy } from "../model";
+import { Power } from "../model";
+import { Bubble } from "../model";
+import { Player } from "../model";
 import { RandomPower } from "./RandomPower";
 import { RandomPattern } from "./RandomPattern";
 import { RandomCoin } from "./RandomCoin";
@@ -65,7 +65,7 @@ export class Level extends Middleware<MainContext> {
     // this.context.level.width = Config.width;
     // this.context.level.height = Config.height;
 
-    const bookmark = this.context.page.bookmark;
+    const bookmark = this.context.page.value.bookmark;
     const dist = this.context.user.bookmarks[bookmark];
     this.startDist = dist > 0 ? dist : 0;
     this.startBookmark = dist > 0 ? bookmark : -1;

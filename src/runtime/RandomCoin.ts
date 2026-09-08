@@ -7,9 +7,9 @@
 
 import { Middleware } from "polymatic";
 
-import { type MainContext } from "./Context";
-import { Coin } from "./Coin";
-import { Calc } from "./Calc";
+import { type MainContext } from "../model";
+import { Coin } from "../model";
+import { Calc } from "../model";
 
 export class RandomCoin extends Middleware<MainContext> {
   next: number;
@@ -97,7 +97,7 @@ export const COINS: CoinOption[] = [
     weight: (param) => (param.dist > 100000 ? param.dist / 100000 : 0),
   },
   {
-    value: 100000,
+    value: 1000000,
     weight: (param) => (param.dist > 150000 ? (0.5 * param.dist) / 100000 : 0),
   },
 ];

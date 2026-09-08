@@ -9,14 +9,18 @@ import * as Stage from "stage-js";
 
 import { Middleware } from "polymatic";
 
-import { type MainContext } from "./Context";
+import { type MainContext } from "../model";
 import { PageSwitch } from "./PageSwitch";
-import { HomePage } from "./HomePage";
-import { LevelPage } from "./LevelPage";
+import { HomeBackdrop } from "./HomeBackdrop";
+import { LevelView } from "./LevelView";
 import { EndPage } from "./EndPage";
-import { HelpPage } from "./HelpPage";
 
-export class Terminal extends Middleware<MainContext> {
+/**
+ * Mounts the stage and keeps it fitted to the play field, then hands the page
+ * over to PageSwitch. This used to be Terminal, and used to own the menu and
+ * the help dialog too - both are Preact now (see shell/).
+ */
+export class StageView extends Middleware<MainContext> {
   constructor() {
     super();
     this.on("activate", this.handleActivate);
@@ -24,10 +28,11 @@ export class Terminal extends Middleware<MainContext> {
 
     this.use(
       new PageSwitch({
-        "home-page": new HomePage(),
-        "play-page": new LevelPage(),
+        // the menu is a Preact page; all that is left on the stage behind it is
+        // the backdrop
+        "home-page": new HomeBackdrop(),
+        "play-page": new LevelView(),
         "end-page": new EndPage(),
-        "help-page": new HelpPage(),
       }),
     );
   }
@@ -46,12 +51,11 @@ export class Terminal extends Middleware<MainContext> {
       });
     });
 
-    this.setContext((context) => {
-      context.stage = stage;
-    });
+    this.context.stage = stage;
   };
 
   handleStageReady = () => {
+    this.context.ready.value = true;
     this.emit("page-set", { name: "home-page" });
   };
 }

@@ -7,10 +7,10 @@
 
 import { Middleware } from "polymatic";
 
-import { type MainContext } from "./Context";
-import { Power } from "./Power";
-import { Bubble } from "./Bubble";
-import { Calc } from "./Calc";
+import { type MainContext } from "../model";
+import { Power } from "../model";
+import { Bubble } from "../model";
+import { Calc } from "../model";
 
 export class RandomPower extends Middleware<MainContext> {
   next: number;

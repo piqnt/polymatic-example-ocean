@@ -7,7 +7,7 @@
 
 import { Middleware } from "polymatic";
 
-import { UPGRADES, UserData, type MainContext } from "./Context";
+import { UPGRADES, UserData, type MainContext } from "../model";
 
 export class LocalStore extends Middleware<MainContext> {
   key = "ocean-data";

@@ -7,9 +7,7 @@
 
 import { Middleware } from "polymatic";
 
-import { type MainContext } from "./Context";
-
-export const upgradePrice = (name: string, level: number) => Math.pow(10, level + 2);
+import { type MainContext, upgradePrice } from "../model";
 
 export class Upgrade extends Middleware<MainContext> {
   constructor() {

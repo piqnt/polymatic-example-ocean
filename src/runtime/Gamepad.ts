@@ -7,7 +7,7 @@
 
 import { Middleware } from "polymatic";
 
-import { type MainContext } from "./Context";
+import { type MainContext } from "../model";
 
 /** Moves cursor based on user input. */
 export class Gamepad extends Middleware<MainContext> {

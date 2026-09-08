@@ -7,9 +7,9 @@
 
 import { Middleware } from "polymatic";
 
-import { type MainContext } from "./Context";
-import { Enemy } from "./Enemy";
-import { Calc } from "./Calc";
+import { type MainContext } from "../model";
+import { Enemy } from "../model";
+import { Calc } from "../model";
 
 export class RandomEnemy extends Middleware<MainContext> {
   next: number;

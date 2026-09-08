@@ -5,39 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as Stage from "stage-js";
-
 import { type Coin } from "./Coin";
 import { type Enemy } from "./Enemy";
 import { type Power } from "./Power";
 import { type Bubble } from "./Bubble";
 import { type Player } from "./Player";
-import { type PageConfig } from "./PageSwitch";
-import { type Config } from "./Config";
-
-export const UPGRADES = ["pull", "speed", "push", "power", "oxygen", "slow"];
-
-export class Stats {
-  coins?: number = 0;
-  dist?: number = 0;
-}
-
-export class Upgrades {
-  power?: number = 0;
-  oxygen?: number = 0;
-  speed?: number = 0;
-  pull?: number = 0;
-  push?: number = 0;
-  slow?: number = 0;
-
-  bookmarks?: number = 0;
-}
-
-export class UserData {
-  upgrades: Upgrades = new Upgrades();
-  bookmarks: number[] = [];
-  stats: Stats = new Stats();
-}
 
 export interface Cursor {
   x: number;
@@ -46,10 +18,8 @@ export interface Cursor {
   speed?: number;
 }
 
+/** The run in progress. Plain fields: the runtime writes them every frame. */
 export class LevelData {
-  // width: number;
-  // height: number;
-
   dist: number;
   speed: number;
 
@@ -80,12 +50,4 @@ export class LevelData {
       octopus: 0,
     },
   };
-}
-
-export interface MainContext {
-  stage?: Stage.Root;
-  user?: UserData;
-  level?: LevelData;
-  page?: PageConfig;
-  config: typeof Config;
 }

@@ -4,14 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "build": "vite build",
     "preview": "vite preview",
-    "pretty": "prettier --write './src/**/*.ts'",
+    "pretty": "prettier --write './src/**/*.{ts,tsx}'",
     "svg-pretty": "svgo ./media/*.svg --pretty",
     "svg-export": "svgexport ./media/main.svg ./media/main.png 8x"
   },
   "devDependencies": {
+    "@preact/preset-vite": "^2.10.6",
     "@types/node": "^22.10.7",
     "@typescript-eslint/eslint-plugin": "^8.20.0",
     "@typescript-eslint/parser": "^8.20.0",
@@ -26,8 +27,11 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
+    "@preact/signals": "^2.10.1",
     "nanoid": "^5.1.5",
     "polymatic": "^0.0.12",
+    "preact": "^10.29.8",
+    "react-icons": "^5.7.0",
     "stage-js": "^1.0.0-alpha.23",
     "store": "^2.0.12"
   }
