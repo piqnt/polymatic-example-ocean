@@ -70,14 +70,17 @@ export class HudManager extends Middleware<MainContext> {
     hud.bookmarks.forEach((slot, i) => {
       const price = upgradePrice("bookmark", i - 1);
       if (i <= owned) {
+        slot.state.value = "owned";
         slot.distance.value = i === 0 ? 0 : (user.bookmarks[i - 1] ?? null);
         slot.price.value = null;
         slot.affordable.value = true;
       } else if (i === owned + 1) {
+        slot.state.value = "next";
         slot.distance.value = user.bookmarks.length === i ? user.stats.dist : (user.bookmarks[i - 1] ?? null);
         slot.price.value = price;
         slot.affordable.value = price <= user.stats.coins;
       } else {
+        slot.state.value = "locked";
         slot.distance.value = null;
         slot.price.value = price;
         slot.affordable.value = false;

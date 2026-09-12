@@ -9,8 +9,8 @@ import mainImage from "../../media/main.png";
 
 /**
  * Draws a sprite out of the same atlas the game renders from, as a css
- * background - so the logo, the button plates, the upgrade icons and the coins
- * in the DOM are the artwork itself, not a lookalike.
+ * background - so the logo, the upgrade icons and the coins in the DOM are the
+ * artwork itself, not a lookalike.
  *
  * The rects below are copied from media/main.ts, in the units that file is
  * written in. Stage multiplies those by `ppu` (16) to get stage units, which is
@@ -42,8 +42,6 @@ export function atlasStyle(rect: AtlasRect, scale = 1) {
 }
 
 export const LOGO: AtlasRect = { x: 12, y: 0, width: 4, height: 1.8 };
-export const PLAY_PLATE: AtlasRect = { x: 12.25, y: 2.25, width: 1.5, height: 1.5 };
-export const OPTION_PLATE: AtlasRect = { x: 14.25, y: 2.25, width: 1.5, height: 1.5 };
 
 const UPGRADE_ORDER = ["power", "oxygen", "speed", "pull", "push", "slow"];
 

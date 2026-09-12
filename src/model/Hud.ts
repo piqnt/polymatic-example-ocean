@@ -10,19 +10,20 @@ import { type Signal, signal } from "@preact/signals";
 import { UPGRADES } from "./Upgrades";
 
 /**
- * One of the six bookmark buttons on the menu. A bookmark either shows the
- * distance it starts you at, or a price to unlock - and the one you are about
- * to buy shows both, with the distance dimmed.
+ * One of the six bookmark cards on the menu. An owned bookmark shows the
+ * distance it starts you at; the next one along shows a price to unlock, over
+ * the distance you would be buying; the rest are locked behind it.
  */
 export interface BookmarkSlot {
-  /** the bookmark this button plays, -1 being the start of the run */
+  /** the bookmark this card plays, -1 being the start of the run */
   bookmark: number;
+  state: Signal<"owned" | "next" | "locked">;
   distance: Signal<number | null>;
   price: Signal<number | null>;
   affordable: Signal<boolean>;
 }
 
-/** One of the six upgrade buttons: its icon, the level you are on, its price. */
+/** One of the six upgrade cards: the level you are on, and its price. */
 export interface UpgradeSlot {
   name: string;
   level: Signal<number>;
@@ -80,6 +81,7 @@ export class HudData {
     for (let i = 0; i < 6; i++) {
       this.bookmarks.push({
         bookmark: i - 1,
+        state: signal<"owned" | "next" | "locked">("locked"),
         distance: signal<number | null>(null),
         price: signal<number | null>(null),
         affordable: signal(false),

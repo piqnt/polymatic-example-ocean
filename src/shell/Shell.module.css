@@ -31,15 +31,26 @@
 
 /* --- menu --- */
 
+/* Sized from the viewport width alone (capped so it does not balloon on a
+   desktop) rather than the play field's unit, so a short window scrolls the
+   menu instead of shrinking it. */
 .menu {
+  --u: min(100vw / 120, 3.5px);
   position: absolute;
   inset: 0;
   display: flex;
+  overflow-y: auto;
+  pointer-events: auto;
+}
+
+/* centred when it fits, scrolls from the top when it does not */
+.menuInner {
+  margin: auto;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: calc(var(--u) * 4);
-  pointer-events: auto;
+  padding: calc(var(--u) * 10) calc(var(--u) * 4) calc(var(--u) * 4);
 }
 
 .logo {
@@ -74,55 +85,109 @@
   line-height: 1;
 }
 
-.row {
+.section {
   display: flex;
-  gap: calc(var(--u) * 4);
+  flex-direction: column;
+  gap: calc(var(--u) * 2);
+  width: calc(var(--u) * 100);
 }
 
-.plate {
-  position: relative;
+.sectionTitle {
+  margin: 0;
+  font-size: calc(var(--u) * 4.5);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 3);
+}
+
+/* the cards are set in the same pale plate and dark ink the sprite buttons were */
+.card {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 2.5);
+  padding: calc(var(--u) * 2) calc(var(--u) * 3);
   border: none;
-  padding: 0;
-  background: transparent no-repeat;
-  cursor: pointer;
+  border-radius: calc(var(--u) * 2.5);
+  background: rgba(230, 230, 230, 0.92);
   color: #1c2b33;
   font-family: var(--ocean-font);
   font-weight: 700;
+  text-align: left;
   text-shadow: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  cursor: pointer;
   transition: transform 120ms ease-out;
 }
 
-.plate:hover {
-  transform: scale(1.04);
+.card:hover {
+  transform: scale(1.03);
 }
 
-.bookmarkDistance {
-  font-size: calc(var(--u) * 8);
+.cardIcon {
+  flex: none;
+  display: flex;
+  font-size: calc(var(--u) * 9);
   line-height: 1;
 }
 
-/* a bookmark you have not bought yet shows its distance behind the price */
-.dimmed {
-  opacity: 0.5;
+.cardBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 1);
 }
 
-.priceTag {
-  position: absolute;
-  right: calc(var(--u) * 1.6);
-  bottom: calc(var(--u) * 1.4);
+.cardTitle {
   font-size: calc(var(--u) * 5);
   line-height: 1;
 }
 
-.levelTag {
-  position: absolute;
-  left: calc(var(--u) * 1.6);
-  top: calc(var(--u) * 1.4);
-  font-size: calc(var(--u) * 5);
+/* the distance is what a bookmark is, so it is set larger than a name */
+.cardDistance {
+  font-size: calc(var(--u) * 6);
+  gap: calc(var(--u) * 1);
+}
+
+.cardAbout {
+  font-size: calc(var(--u) * 3.6);
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+/* level and price, stacked in the card's top-right corner */
+.cardCorner {
+  flex: none;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: calc(var(--u) * 1.5);
+  font-size: calc(var(--u) * 4);
   line-height: 1;
+}
+
+.level {
+  display: flex;
+  gap: calc(var(--u) * 1);
+}
+
+.dot {
+  width: calc(var(--u) * 3.5);
+  height: calc(var(--u) * 2);
+  border-radius: calc(var(--u) * 1);
+  border: calc(var(--u) * 0.5) solid currentColor;
+  box-sizing: border-box;
+}
+
+.dotFilled {
+  background: currentColor;
 }
 
 .unaffordable {
